@@ -1,0 +1,209 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+Node* head = NULL;
+
+// Insert at beginning
+void insertBeg(int x) {
+    Node* n = new Node;
+    n->data = x;
+
+    if (head == NULL) {
+        n->next = n;
+        head = n;
+        return;
+    }
+
+    Node* temp = head;
+    while (temp->next != head) {
+        temp = temp->next;
+    }
+
+    n->next = head;
+    temp->next = n;
+    head = n;
+}
+
+// Insert at end
+void insertEnd(int x) {
+    Node* n = new Node;
+    n->data = x;
+
+    if (head == NULL) {
+        n->next = n;
+        head = n;
+        return;
+    }
+
+    Node* temp = head;
+    while (temp->next != head) {
+        temp = temp->next;
+    }
+
+    temp->next = n;
+    n->next = head;
+}
+
+// Insert at position
+void insertPos(int x, int pos) {
+    Node* temp = head;
+
+    for (int i = 1; i < pos - 1 && temp->next != head; i++) {
+        temp = temp->next;
+    }
+
+    Node* n = new Node;
+    n->data = x;
+
+    n->next = temp->next;
+    temp->next = n;
+}
+
+// Delete from beginning
+void deleteBeg() {
+    if (head == NULL) return;
+
+    if (head->next == head) {
+        delete head;
+        head = NULL;
+        return;
+    }
+
+    Node* temp = head;
+    Node* last = head;
+
+    while (last->next != head) {
+        last = last->next;
+    }
+
+    head = head->next;
+    last->next = head;
+
+    delete temp;
+}
+
+// Delete from end
+void deleteEnd() {
+    if (head == NULL) return;
+
+    if (head->next == head) {
+        delete head;
+        head = NULL;
+        return;
+    }
+
+    Node* temp = head;
+    while (temp->next->next != head) {
+        temp = temp->next;
+    }
+
+    Node* last = temp->next;
+    temp->next = head;
+
+    delete last;
+}
+
+// Delete from position
+void deletePos(int pos) {
+    if (head == NULL) return;
+
+    Node* temp = head;
+
+    for (int i = 1; i < pos - 1 && temp->next != head; i++) {
+        temp = temp->next;
+    }
+
+    Node* del = temp->next;
+
+    if (del == head) {
+        deleteBeg();
+        return;
+    }
+
+    temp->next = del->next;
+    delete del;
+}
+
+// Display
+void display() {
+    if (head == NULL) {
+        cout << "List is empty\n";
+        return;
+    }
+
+    Node* temp = head;
+
+    do {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    } while (temp != head);
+
+    cout << "(HEAD)\n";
+}
+
+// Main menu
+int main() {
+    int choice, x, pos;
+
+    do {
+        cout << "\n1.Insert Beginning";
+        cout << "\n2.Insert End";
+        cout << "\n3.Insert Position";
+        cout << "\n4.Delete Beginning";
+        cout << "\n5.Delete End";
+        cout << "\n6.Delete Position";
+        cout << "\n7.Display";
+        cout << "\n8.Exit\n";
+
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cin >> x;
+                insertBeg(x);
+                break;
+
+            case 2:
+                cin >> x;
+                insertEnd(x);
+                break;
+
+            case 3:
+                cin >> x >> pos;
+                insertPos(x, pos);
+                break;
+
+            case 4:
+                deleteBeg();
+                break;
+
+            case 5:
+                deleteEnd();
+                break;
+
+            case 6:
+                cin >> pos;
+                deletePos(pos);
+                break;
+
+            case 7:
+                display();
+                break;
+
+            case 8:
+                cout << "Exit\n";
+                break;
+
+            default:
+                cout << "Invalid choice\n";
+        }
+
+    } while (choice != 8);
+
+    return 0;
+}
