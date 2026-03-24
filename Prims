@@ -53,8 +53,6 @@ void primMST(int graph[V][V]){
 }
 
 int main(){
-	cout<<"CODE BY : KHUSHIMA NEMBANG"<<endl;
-	cout<<"\n---------Prim's Algorithm--------"<<endl;
 	int graph[V][V]={
 	  {0,2,0,6,0},
 	  {2,0,3,8,5},
